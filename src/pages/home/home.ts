@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NavController, IonicPage, MenuController } from 'ionic-angular';
 import { CredenciaisDTO } from '../../models/credenciais.dto';
 import { AuthService } from '../../services/auth.service';
-import { createLoweredSymbol } from '@angular/compiler';
 
 @IonicPage()
 @Component({
