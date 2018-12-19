@@ -49,6 +49,6 @@ export class HomePage {
   }
 
   signup(){
-    this.navCtrl.push("SignupPage")
+    this.navCtrl.push("SignupPage");
   }
 }
