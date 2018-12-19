@@ -25,6 +25,17 @@ export class AuthService {
             });
     }
 
+    refreshToken(){
+        return this.http.post(
+            `${API_CONFIG.baseUrl}/auth/refresh_token`,
+            {},
+            {
+                observe: 'response', //Especifica que a req vai retornar um obj do tipo response
+                responseType: 'text' //O endpoint /auth/refresh_token retorna uma resposta de texto vazio e não um JSON. Colocando isso, evita o de parse.
+
+            });
+    }
+
     successfulLogin(authorizationValue : string) {
         let tok = authorizationValue.substring(7);
         let user : LocalUser = {
