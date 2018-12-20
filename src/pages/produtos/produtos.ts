@@ -1,3 +1,4 @@
+import { API_CONFIG } from './../../config/api.config';
 import { ProdutoService } from './../../services/produto.service';
 import { ProdutoDTO } from './../../models/produto.dto';
 import { Component } from '@angular/core';
@@ -29,9 +30,21 @@ export class ProdutosPage {
     this.produtoService.findByCategoria(categoriaId)
       .subscribe(response => {
         this.items = response['content'];
+        this.loadImageUrls();
       }, error => {}
     );
       
+  }
+
+  loadImageUrls(){
+    for(var i = 0; i<this.items.length; i++){
+      let item = this.items[i];
+      this.produtoService.getSmallFileFromBucket(item.id)
+        .subscribe(response => {
+          item.imageUrl = `${API_CONFIG.bucketBaseUrl}/prod${item.id}-small.jpg`
+        },
+        error => {});
+    }
   }
 
 }
