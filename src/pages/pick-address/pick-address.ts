@@ -33,7 +33,7 @@ export class PickAddressPage {
         let cart = this.cartService.getCart();
 
         this.pedido = {
-          cliente : response['id'],
+          cliente : {id : response['id']},
           enderecoDeEntrega: null,
           pagamento: null,
           items: cart.items.map(x => {return {quantidade : x.quantidade, produto: {id: x.produto.id}}})
