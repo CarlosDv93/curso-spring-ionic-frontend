@@ -8,13 +8,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { EnderecoDTO } from '../../models/endereco.dto';
 
-/**
- * Generated class for the OrderConfirmationPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-order-confirmation',
@@ -26,6 +19,7 @@ export class OrderConfirmationPage {
   cartItems : CartItem[];
   cliente : ClienteDTO;
   endereco : EnderecoDTO;
+  codPedido : string;
 
   constructor(public navCtrl: NavController, 
       public navParams: NavParams,
@@ -65,16 +59,28 @@ export class OrderConfirmationPage {
     this.navCtrl.setRoot('CartPage');
   }
 
+  home(){
+    this.navCtrl.setRoot('CategoriasPage');
+  }
+
   checkout(){
     this.pedidoService.insert(this.pedido)
         .subscribe(response => {
           this.cartService.createOrCleanCart();
-          console.log(response.headers.get('location'));
-        }, error => {
+          this.codPedido = this.extractId(response.headers.get('location'));
+          
+        }, 
+        error => {
           if(error.status == 403){
             this.navCtrl.setRoot('HomePage');
-          }
-        })
+        }
+      }
+    )
+  }
+
+  private extractId(location : string) : string {
+    let position = location.lastIndexOf('/');
+    return location.substring(position+1, location.length);
   }
 
 }
